@@ -256,6 +256,24 @@ Output resistance (Ro) is the resistance seen by the load connected to the outpu
 Ro = ΔVout / ΔIout
 - **Vout**: Output voltage.
 - **Iout**: Output current.
+Replace the given code in analysis section-
+```
+.dc v1 0 0.7 1m 
+.control
+    run
+    set xbrushwidth=3
+    let gain=(abs(deriv(nfet_out)) >=1)*0.7
+    *plot gain nfet_out nfet_in
+    meas dc Vil find nfet_in when gain=nfet_out cross=1
+    meas dc Voh find nfet_out when gain=nfet_out cross=1
+    meas dc Vih find nfet_in when gain=nfet_out cross=2
+    meas dc Vol find nfet_out when gain=nfet_out cross=2
+    let nmh= Voh-Vih
+    let nml= Vil-Vol
+    print nmh
+    print nml
+.endc
+```
 
 > Click on the peak point to calculate output resistance
 ![image](https://github.com/user-attachments/assets/ec77e459-ef31-4bba-8fdd-ad5a3cf6ee76)
@@ -275,7 +293,16 @@ The Voltage Transfer Characteristic (VTC) of a CMOS inverter describes the relat
 - **Vout**: Output voltage from the inverter.
 
 The VTC curve typically features three regions: the cutoff region, the saturation region, and the linear region, depicting the inverter's behavior during the transition from logic low to logic high.
-
+Replace the given code in analysis section-
+```
+.dc v1 0 0.7 1m 
+.control
+    run
+    set xbrushwidth=3
+    plot nfet_out nfet_in
+    meas dc v_th when nfet_out=nfet_in
+.endc
+```
 
 ![image](https://github.com/user-attachments/assets/1218f987-fcdf-4ea3-bb6a-d1f5436e9378)
 
@@ -288,6 +315,27 @@ The output waveform mirrors the input, transitioning between 0V and VDD (0.7V).
 #### Power Dissipation Visualization
 
 - **Area under the Curve**: The power dissipation can be visualized as the area under the output voltage waveform when charging the load capacitor. 
+For pulse change the values as follows-
+```
+pulse(0 0.7 0p 0.1p 0.1p 5p 10p 2)
+```
+
+Replace the given code in analysis section-
+```
+.tran 0.1p 40p
+.control
+    run
+    set xbrushwidth=3
+    let Id=v2#branch
+    meas tran p integ Id from=10e-12 to=20e-12
+    let pow=p*0.7*1e11
+    print pow
+.endc
+** For 0.5fF Capacitor
+```
+
+
+
 > Here we can see charging and discharging of capacitor at the output
 ![image](https://github.com/user-attachments/assets/9c6c8462-4364-430e-95d8-680ee0571b28)
 > We can observe oscillations happening in the current branch of VDD 
@@ -295,6 +343,7 @@ The output waveform mirrors the input, transitioning between 0V and VDD (0.7V).
 > We can se the spikes in current when there is transition of input output
 ![image](https://github.com/user-attachments/assets/1d5f23ca-77d6-4ad8-a277-707a6ab5a549)
 **All above calculations are done for 0.1fF capacitor Load**
+
 
 
 #### Transconductance (gm)
