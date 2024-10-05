@@ -247,15 +247,7 @@ Noise margin is the measure of a digital circuit's ability to tolerate noise wit
 - **Voh**: Minimum output voltage interpreted as a logic high.
 - **Vih**: Minimum input voltage interpreted as a logic high.
 - **Vol**: Maximum output voltage interpreted as a logic low.
-> Calculate the points by clicking on it or check the console for values
-![Add a little bit of body text](https://github.com/user-attachments/assets/ec00e79c-5ee6-4b5b-9398-e68617e50574)
 
-### Output Resistance (Ro)
-Output resistance (Ro) is the resistance seen by the load connected to the output of a circuit.
-
-Ro = ΔVout / ΔIout
-- **Vout**: Output voltage.
-- **Iout**: Output current.
 Replace the given code in analysis section-
 ```
 .dc v1 0 0.7 1m 
@@ -272,6 +264,27 @@ Replace the given code in analysis section-
     let nml= Vil-Vol
     print nmh
     print nml
+.endc
+```
+> Calculate the points by clicking on it or check the console for values
+![Add a little bit of body text](https://github.com/user-attachments/assets/ec00e79c-5ee6-4b5b-9398-e68617e50574)
+
+### Output Resistance (Ro)
+Output resistance (Ro) is the resistance seen by the load connected to the output of a circuit.
+
+Ro = ΔVout / ΔIout
+- **Vout**: Output voltage.
+- **Iout**: Output current.
+
+Replace the given code in analysis section-
+```
+.dc v1 0 0.7 1m
+.control
+run
+set xbrushwidth=3
+let Id = v2#branch
+let r = deriv(nfet_out, Id)
+plot r  
 .endc
 ```
 
