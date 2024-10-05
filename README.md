@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/6e4a016e-e7a6-4fef-bb9f-a676aa9580eb)![image](https://github.com/user-attachments/assets/15709d19-a5f4-4511-ae54-07cb6cbccc1c)# Evaluation of parameters for CMOS Inverter using 7nm Finfet Technology(ASAP 7nm PDK)
+# Evaluation of parameters for CMOS Inverter using 7nm Finfet Technology(ASAP 7nm PDK)
 
 
 #### Inverter Code-
